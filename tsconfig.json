@@ -17,25 +17,14 @@
     "strictBindCallApply": false,
     "forceConsistentCasingInFileNames": false,
     "noFallthroughCasesInSwitch": false,
+    "esModuleInterop": true,
     "paths": {
-      "@app/entity": [
-        "libs/entity/src"
-      ],
-      "@app/entity/*": [
-        "libs/entity/src/*"
-      ],
-      "@app/common-config": [
-        "libs/common-config/src"
-      ],
-      "@app/common-config/*": [
-        "libs/common-config/src/*"
-      ],
-      "@app/utils": [
-        "libs/utils/src"
-      ],
-      "@app/utils/*": [
-        "libs/utils/src/*"
-      ]
+      "@app/entity": ["libs/entity/src"],
+      "@app/entity/*": ["libs/entity/src/*"],
+      "@app/common-config": ["libs/common-config/src"],
+      "@app/common-config/*": ["libs/common-config/src/*"],
+      "@app/utils": ["libs/utils/src"],
+      "@app/utils/*": ["libs/utils/src/*"]
     }
   }
 }
