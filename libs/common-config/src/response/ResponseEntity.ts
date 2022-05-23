@@ -1,4 +1,4 @@
-import { Exclude } from 'class-transformer';
+import { Exclude, Expose } from 'class-transformer';
 import { ApiProperty } from '@nestjs/swagger';
 import { ResponseStatus } from './ResponseStatus';
 
@@ -45,19 +45,19 @@ export class ResponseEntity<T> {
   }
 
   @ApiProperty()
-  @Exclude()
+  @Expose()
   get status(): string {
     return this._status;
   }
 
   @ApiProperty()
-  @Exclude()
+  @Expose()
   get message(): string {
     return this._message;
   }
 
   @ApiProperty()
-  @Exclude()
+  @Expose()
   get data(): T {
     return this._data;
   }
