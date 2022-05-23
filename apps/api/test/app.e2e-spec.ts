@@ -1,8 +1,8 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { INestApplication } from '@nestjs/common';
+import { HttpStatus, INestApplication } from '@nestjs/common';
 import request from 'supertest';
 import { ApiAppModule } from '../src/app.module';
-import { ResponseEntity } from '@app/common-config/response/ResponseEntity';
+import { setNestApp } from '@app/common-config/setNestApp';
 
 describe('ApiController (e2e)', () => {
   let app: INestApplication;
@@ -13,14 +13,19 @@ describe('ApiController (e2e)', () => {
     }).compile();
 
     app = moduleFixture.createNestApplication();
+    setNestApp(app);
     await app.init();
   });
 
-  it('/ (GET)', async () => {
-    const res = await request(app.getHttpServer()).get('/').expect(200);
+  it('/v1 (GET)', async () => {
+    const res = await request(app.getHttpServer())
+      .get('/v1')
+      .expect(HttpStatus.OK);
 
-    expect(res.body).toEqual(
-      ResponseEntity.OK_WITH_DATA(process.env.NODE_ENV + process.env.PORT),
-    );
+    expect(res.body).toEqual({
+      data: process.env.NODE_ENV + process.env.PORT,
+      message: '',
+      status: 'OK',
+    });
   });
 });
