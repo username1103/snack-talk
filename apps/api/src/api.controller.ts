@@ -1,3 +1,4 @@
+import { ResponseEntity } from '@app/common-config/response/ResponseEntity';
 import { Controller, Get } from '@nestjs/common';
 import { ApiService } from './api.service';
 
@@ -6,7 +7,7 @@ export class ApiController {
   constructor(private readonly apiService: ApiService) {}
 
   @Get()
-  getHello(): string {
-    return this.apiService.getHello();
+  getHello() {
+    return ResponseEntity.OK_WITH_DATA(this.apiService.getHello());
   }
 }

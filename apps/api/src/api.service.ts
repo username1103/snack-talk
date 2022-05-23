@@ -1,20 +1,11 @@
-import { CommonConfigService } from '@app/common-config';
-import { EntityService } from '@app/entity';
-import { UtilsService } from '@app/utils';
+import { AppConfigService } from '@app/common-config/config/app/config.service';
 import { Injectable } from '@nestjs/common';
 
 @Injectable()
 export class ApiService {
-  constructor(
-    private readonly commonConfigService: CommonConfigService,
-    private readonly entityService: EntityService,
-    private readonly utilsService: UtilsService,
-  ) {}
+  constructor(private readonly appConfigService: AppConfigService) {}
+
   getHello(): string {
-    return (
-      this.commonConfigService.hello() +
-      this.entityService.hello() +
-      this.utilsService.hello()
-    );
+    return this.appConfigService.env + this.appConfigService.port;
   }
 }
