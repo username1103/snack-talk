@@ -10,7 +10,7 @@
     "build": "nest build",
     "format": "prettier --write \"apps/**/*.ts\" \"libs/**/*.ts\"",
     "start": "nest start",
-    "start:dev": "nest start --watch",
+    "start:dev": "cross-env NODE_ENV=development PORT=3000 nest start --watch",
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/main",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
@@ -18,7 +18,6 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./apps/toy-nestjs/test/jest-e2e.json",
     "db:dev": "docker-compose -f docker-compose-dev-db.yml"
   },
   "dependencies": {
@@ -47,6 +46,7 @@
     "@types/supertest": "^2.0.11",
     "@typescript-eslint/eslint-plugin": "^5.0.0",
     "@typescript-eslint/parser": "^5.0.0",
+    "cross-env": "^7.0.3",
     "eslint": "^8.0.1",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^4.0.0",
@@ -76,6 +76,9 @@
     ],
     "coverageDirectory": "./coverage",
     "testEnvironment": "node",
+    "testEnvironmentOptions": {
+      "NODE_ENV": "test"
+    },
     "roots": [
       "<rootDir>/apps/",
       "<rootDir>/libs/"
@@ -84,6 +87,11 @@
       "^@app/entity(|/.*)$": "<rootDir>/libs/entity/src/$1",
       "^@app/common-config(|/.*)$": "<rootDir>/libs/common-config/src/$1",
       "^@app/utils(|/.*)$": "<rootDir>/libs/utils/src/$1"
-    }
+    },
+    "projects": [
+      "<rootDir>/apps/api/jest.config.json",
+      "<rootDir>/apps/api/test/jest-e2e.json",
+      "<rootDir>/libs/common-config/jest.config.json"
+    ]
   }
 }
