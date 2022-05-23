@@ -1,6 +1,6 @@
 import { Injectable, LoggerService as ILoggerService } from '@nestjs/common';
-import * as moment from 'moment';
-import * as winston from 'winston';
+import moment from 'moment';
+import winston from 'winston';
 import { AppConfigService } from '../config/app/config.service';
 import { Enviroment } from '../config/app/validate';
 

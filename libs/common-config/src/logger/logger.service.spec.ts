@@ -1,7 +1,16 @@
+import { Test } from '@nestjs/testing';
 import { Enviroment } from '../config/app/validate';
+import { LoggerModule } from './logger.module';
 import { LoggerService } from './logger.serivce';
 
 describe('Logger Service Test', () => {
+  beforeAll(async () => {
+    // Enviroment 가져오기 위함
+    await Test.createTestingModule({
+      imports: [LoggerModule],
+    }).compile();
+  });
+
   test.each([
     { env: Enviroment.Development, expectedValue: 'debug' },
     { env: Enviroment.Production, expectedValue: 'info' },

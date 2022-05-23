@@ -1,4 +1,5 @@
 import { AppConfigModule } from '@app/common-config/config/app/config.module';
+import { LoggerModule } from '@app/common-config/logger/logger.module';
 import { ResponseEntity } from '@app/common-config/response/ResponseEntity';
 import { Test, TestingModule } from '@nestjs/testing';
 import { ApiController } from './api.controller';
@@ -9,7 +10,7 @@ describe('ApiController', () => {
 
   beforeEach(async () => {
     const app: TestingModule = await Test.createTestingModule({
-      imports: [AppConfigModule],
+      imports: [AppConfigModule, LoggerModule],
       controllers: [ApiController],
       providers: [ApiService],
     }).compile();
