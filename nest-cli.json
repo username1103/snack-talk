@@ -1,12 +1,6 @@
 {
   "collection": "@nestjs/schematics",
-  "sourceRoot": "apps/toy-nestjs/src",
   "monorepo": true,
-  "root": "apps/toy-nestjs",
-  "compilerOptions": {
-    "webpack": true,
-    "tsConfigPath": "apps/toy-nestjs/tsconfig.app.json"
-  },
   "projects": {
     "api": {
       "type": "application",
