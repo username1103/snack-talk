@@ -33,9 +33,9 @@ export class LoggerService implements ILoggerService {
         winston.format.splat(),
         winston.format.printf(
           ({ level, message }) =>
-            `[${moduleName}] ${level}: ${moment().format(
+            `[${moduleName}] ${moment().format(
               'YY/MM/DD HH:mm:ss',
-            )} ${message}`,
+            )} ${level}: ${message}`,
         ),
       ),
       transports: [
