@@ -1,7 +1,6 @@
 import { LoggerService as ILoggerService } from '@nestjs/common';
 import moment from 'moment';
 import winston from 'winston';
-import { Enviroment } from '../config/app/validate';
 
 export class LoggerService implements ILoggerService {
   private readonly _logger: winston.Logger;
@@ -50,11 +49,11 @@ export class LoggerService implements ILoggerService {
 
   private static getMaxShowingLevel(env: string) {
     switch (env) {
-      case Enviroment.Development:
+      case 'development':
         return 'debug';
-      case Enviroment.Production:
+      case 'production':
         return 'info';
-      case Enviroment.Test:
+      case 'test':
         return 'error';
       default:
         return 'info';

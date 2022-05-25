@@ -1,16 +1,11 @@
+import { Environment } from '@app/common-config/Environment';
 import { Expose, plainToClass, Type } from 'class-transformer';
 import { IsEnum, IsNumber, validateSync } from 'class-validator';
 
-export enum Enviroment {
-  Development = 'development',
-  Production = 'production',
-  Test = 'test',
-}
-
 export class AppConfig {
   @Expose()
-  @IsEnum(Enviroment)
-  NODE_ENV: Enviroment;
+  @IsEnum(Environment)
+  NODE_ENV: Environment;
 
   @IsNumber()
   @Expose()

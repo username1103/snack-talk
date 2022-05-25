@@ -1,6 +1,7 @@
+import { Environment } from '@app/common-config/Environment';
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { AppConfig, Enviroment } from './validate';
+import { AppConfig } from './validate';
 
 @Injectable()
 export class AppConfigService {
@@ -15,14 +16,14 @@ export class AppConfigService {
   }
 
   isDevelopment() {
-    return this.env === Enviroment.Development;
+    return this.env === Environment.Development;
   }
 
   isTest() {
-    return this.env === Enviroment.Test;
+    return this.env === Environment.Test;
   }
 
   isProduction() {
-    return this.env === Enviroment.Production;
+    return this.env === Environment.Production;
   }
 }

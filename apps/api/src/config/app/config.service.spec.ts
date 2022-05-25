@@ -1,7 +1,7 @@
+import { Environment } from '@app/common-config/Environment';
 import { Test } from '@nestjs/testing';
 import { AppConfigModule } from './config.module';
 import { AppConfigService } from './config.service';
-import { Enviroment } from './validate';
 
 describe('App Config Module Test', () => {
   let appConfigService: AppConfigService;
@@ -22,7 +22,7 @@ describe('App Config Module Test', () => {
       const env = appConfigService.env;
 
       // then
-      expect(env).toEqual(Enviroment.Test);
+      expect(env).toEqual(Environment.Test);
     });
 
     test('PORT를 적절히 반환하는가', async () => {
