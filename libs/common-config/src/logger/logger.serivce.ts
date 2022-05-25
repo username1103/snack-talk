@@ -1,10 +1,8 @@
-import { Injectable, LoggerService as ILoggerService } from '@nestjs/common';
+import { LoggerService as ILoggerService } from '@nestjs/common';
 import moment from 'moment';
 import winston from 'winston';
-import { AppConfigService } from '../config/app/config.service';
 import { Enviroment } from '../config/app/validate';
 
-@Injectable()
 export class LoggerService implements ILoggerService {
   private readonly _logger: winston.Logger;
 
@@ -24,25 +22,27 @@ export class LoggerService implements ILoggerService {
     debug: 'gray',
   };
 
-  constructor(private readonly appConfigService: AppConfigService) {
+  constructor(env: string, moduleName: string) {
     winston.addColors(LoggerService.CUSTOM_COLOR);
     this._logger = winston.createLogger({
       levels: LoggerService.CUSTOM_LEVEL,
       format: winston.format.combine(
         LoggerService.enumerateErrorFormat(),
-        this.appConfigService.isDevelopment()
+        env === 'development'
           ? winston.format.colorize()
           : winston.format.uncolorize(),
         winston.format.splat(),
         winston.format.printf(
           ({ level, message }) =>
-            `${level}: ${moment().format('YY/MM/DD HH:mm:ss')} ${message}`,
+            `[${moduleName}] ${level}: ${moment().format(
+              'YY/MM/DD HH:mm:ss',
+            )} ${message}`,
         ),
       ),
       transports: [
         new winston.transports.Console({
           stderrLevels: ['error'],
-          level: LoggerService.getMaxShowingLevel(this.appConfigService.env),
+          level: LoggerService.getMaxShowingLevel(env),
         }),
       ],
     });
@@ -69,10 +69,6 @@ export class LoggerService implements ILoggerService {
   });
 
   log(message: string) {
-    this._logger.info(message);
-  }
-
-  info(message: string) {
     this._logger.info(message);
   }
 

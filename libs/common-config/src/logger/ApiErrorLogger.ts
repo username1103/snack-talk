@@ -1,13 +1,13 @@
 import morgan from 'morgan';
-import { Injectable, NestMiddleware } from '@nestjs/common';
+import { Injectable, Logger, NestMiddleware } from '@nestjs/common';
 import { Request, Response } from 'express';
-import { LoggerService } from './logger.serivce';
+// import { LoggerService } from './logger.serivce';
 
 @Injectable()
 export class ApiErrorLogger implements NestMiddleware {
   private readonly errorResponseFormat = `client: :client - :method :url :status - :response-time ms - message: :message\ndata: :data`;
 
-  constructor(private readonly logger: LoggerService) {
+  constructor(private readonly logger: Logger) {
     morgan.token(
       'message',
       (req: Request, res: Response) =>

@@ -7,9 +7,10 @@ import { setNestApp } from '@app/common-config/setNestApp';
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(ApiAppModule, {
     cors: true,
+    bufferLogs: true,
   });
 
-  setNestApp(app);
+  setNestApp(app, 'API');
 
   app.set('trust proxy', () => true);
 
