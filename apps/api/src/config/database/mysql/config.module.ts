@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-import { getEnvFilePath, getIgnoreEnvFile } from '../config-option';
-import { AppConfigService } from './config.service';
+import { getEnvFilePath, getIgnoreEnvFile } from '../../config-option';
+import { MysqlConfigService } from './config.service';
 import { validate } from './validate';
 
 @Module({
@@ -12,7 +12,7 @@ import { validate } from './validate';
       validate,
     }),
   ],
-  providers: [AppConfigService],
-  exports: [AppConfigService],
+  providers: [MysqlConfigService],
+  exports: [MysqlConfigService],
 })
-export class AppConfigModule {}
+export class MysqlConfigModule {}
