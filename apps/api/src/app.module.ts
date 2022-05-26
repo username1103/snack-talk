@@ -7,6 +7,7 @@ import { TypeOrmConfigModule } from './config/database/typeorm/config.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { TypeOrmConfigService } from './config/database/typeorm/config.service';
 import { TestModule } from '@app/entity/domain/test/test.module';
+import { AppController } from './app.controller';
 
 @Module({
   imports: [
@@ -17,9 +18,8 @@ import { TestModule } from '@app/entity/domain/test/test.module';
     }),
     TestModule,
   ],
-  controllers: [],
+  controllers: [AppController],
   providers: [Logger],
-  exports: [Logger],
 })
 export class ApiAppModule implements NestModule {
   constructor(private readonly appConfigService: AppConfigService) {}

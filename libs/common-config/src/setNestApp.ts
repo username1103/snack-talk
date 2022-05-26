@@ -6,9 +6,8 @@ import {
 } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import helmet from 'helmet';
-import { LoggerService } from './logger/logger.serivce';
 
-export function setNestApp(app: INestApplication, moduleName: string) {
+export function setNestApp(app: INestApplication) {
   app.use(
     helmet({
       contentSecurityPolicy: {
@@ -25,7 +24,6 @@ export function setNestApp(app: INestApplication, moduleName: string) {
     defaultVersion: '1',
   });
 
-  app.useLogger(new LoggerService(process.env.NODE_ENV, moduleName));
   app.useGlobalPipes(
     new ValidationPipe({
       transform: true,

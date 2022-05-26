@@ -1,13 +1,14 @@
 import morgan from 'morgan';
 import { Injectable, Logger, NestMiddleware } from '@nestjs/common';
 import { Request, Response } from 'express';
-// import { LoggerService } from './logger.serivce';
 
 @Injectable()
 export class ApiErrorLogger implements NestMiddleware {
   private readonly errorResponseFormat = `client: :client - :method :url :status - :response-time ms - message: :message\ndata: :data`;
 
-  constructor(private readonly logger: Logger) {
+  private readonly logger = new Logger(ApiErrorLogger.name);
+
+  constructor() {
     morgan.token(
       'message',
       (req: Request, res: Response) =>
@@ -32,7 +33,10 @@ export class ApiErrorLogger implements NestMiddleware {
   use(req: Request, res: Response, next: (error?: any) => void) {
     return morgan(this.errorResponseFormat, {
       skip: (_req: Request, _res: Response) => _res.statusCode < 400,
-      stream: { write: (message) => this.logger.error(message.trim()) },
+      stream: {
+        write: (message) =>
+          this.logger.error(message.trim(), undefined, ApiErrorLogger.name),
+      },
     })(req, res, next);
   }
 }

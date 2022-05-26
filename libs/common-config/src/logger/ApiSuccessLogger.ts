@@ -1,13 +1,14 @@
 import morgan from 'morgan';
 import { Injectable, Logger, NestMiddleware } from '@nestjs/common';
 import { Request, Response } from 'express';
-// import { LoggerService } from './logger.serivce';
 
 @Injectable()
 export class ApiSuccessLogger implements NestMiddleware {
   private readonly successResponseFormat = `client: :client - :method :url :status - :response-time ms\ndata: :data`;
 
-  constructor(private readonly logger: Logger) {
+  private readonly logger = new Logger(ApiSuccessLogger.name);
+
+  constructor() {
     morgan.token(
       'message',
       (_: Request, res: Response) =>
@@ -33,7 +34,9 @@ export class ApiSuccessLogger implements NestMiddleware {
   use(req: Request, res: Response, next: (error?: any) => void) {
     morgan(this.successResponseFormat, {
       skip: (_req: Request, _res: Response) => _res.statusCode >= 400,
-      stream: { write: (message) => this.logger.log(message.trim()) },
+      stream: {
+        write: (message) => this.logger.log(message.trim()),
+      },
     })(req, res, next);
   }
 }

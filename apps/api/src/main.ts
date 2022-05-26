@@ -3,14 +3,16 @@ import { NestExpressApplication } from '@nestjs/platform-express';
 import { ApiAppModule } from './app.module';
 import { AppConfigService } from './config/app/config.service';
 import { setNestApp } from '@app/common-config/setNestApp';
+import { WinstonModule } from 'nest-winston';
+import { getLogger } from '@app/common-config/logger/getLogger';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(ApiAppModule, {
     cors: true,
-    // bufferLogs: true,
+    logger: WinstonModule.createLogger(getLogger(process.env.NODE_ENV, 'API')),
   });
 
-  setNestApp(app, 'API');
+  setNestApp(app);
 
   app.set('trust proxy', () => true);
 

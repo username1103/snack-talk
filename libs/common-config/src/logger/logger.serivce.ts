@@ -1,8 +1,8 @@
-import { LoggerService as ILoggerService } from '@nestjs/common';
+import { Logger, LoggerService as ILoggerService } from '@nestjs/common';
 import moment from 'moment';
 import winston from 'winston';
 
-export class LoggerService implements ILoggerService {
+export class LoggerService extends Logger implements ILoggerService {
   private readonly _logger: winston.Logger;
 
   private static CUSTOM_LEVEL = {
@@ -21,7 +21,8 @@ export class LoggerService implements ILoggerService {
     debug: 'gray',
   };
 
-  constructor(env: string, moduleName: string) {
+  constructor(env: string, moduleName: string, context?: string) {
+    super(context);
     winston.addColors(LoggerService.CUSTOM_COLOR);
     this._logger = winston.createLogger({
       levels: LoggerService.CUSTOM_LEVEL,
@@ -31,12 +32,13 @@ export class LoggerService implements ILoggerService {
           ? winston.format.colorize()
           : winston.format.uncolorize(),
         winston.format.splat(),
-        winston.format.printf(
-          ({ level, message }) =>
-            `[${moduleName}] ${moment().format(
-              'YY/MM/DD HH:mm:ss',
-            )} ${level}: ${message}`,
-        ),
+        winston.format.printf((data) => {
+          console.log(data);
+          const { context, level, message } = data;
+          return `[${moduleName}] ${moment().format(
+            'YY/MM/DD HH:mm:ss',
+          )} ${level.toLocaleUpperCase()} ${context} ${message}`;
+        }),
       ),
       transports: [
         new winston.transports.Console({
