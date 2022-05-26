@@ -7,7 +7,7 @@ import { setNestApp } from '@app/common-config/setNestApp';
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(ApiAppModule, {
     cors: true,
-    bufferLogs: true,
+    // bufferLogs: true,
   });
 
   setNestApp(app, 'API');

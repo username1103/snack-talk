@@ -1,8 +1,0 @@
-{
-  "preset": "ts-jest",
-  "setupFiles": ["<rootDir>/jest-setup-file.ts"],
-  "moduleNameMapper": {
-    "^@app/entity(|/.*)$": "<rootDir>/../entity/src/$1",
-    "^@app/utils(|/.*)$": "<rootDir>/../utils/src/$1"
-  }
-}

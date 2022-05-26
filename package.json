@@ -93,11 +93,6 @@
       "^@app/entity(|/.*)$": "<rootDir>/libs/entity/src/$1",
       "^@app/common-config(|/.*)$": "<rootDir>/libs/common-config/src/$1",
       "^@app/utils(|/.*)$": "<rootDir>/libs/utils/src/$1"
-    },
-    "projects": [
-      "<rootDir>/apps/api/jest.config.json",
-      "<rootDir>/apps/api/test/jest-e2e.json",
-      "<rootDir>/libs/common-config/jest.config.json"
-    ]
+    }
   }
 }

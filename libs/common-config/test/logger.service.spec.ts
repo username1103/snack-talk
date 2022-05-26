@@ -1,5 +1,5 @@
-import { Environment } from '../Environment';
-import { LoggerService } from './logger.serivce';
+import { Environment } from '../src/Environment';
+import { LoggerService } from '../src/logger/logger.serivce';
 
 describe('Logger Service Test', () => {
   test.each([

@@ -16,7 +16,8 @@ export class TypeOrmConfigService implements TypeOrmOptionsFactory {
     connectionName?: string,
   ): TypeOrmModuleOptions | Promise<TypeOrmModuleOptions> {
     const entityPath = path.resolve(
-      './libs/entity/src/domain/**/*.entity.{js,ts}',
+      __dirname,
+      '../../../../../../libs/entity/src/**/*.entity.{js,ts}',
     );
     return {
       type: 'mysql',
