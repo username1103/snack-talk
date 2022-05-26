@@ -11,15 +11,6 @@
         "tsConfigPath": "apps/api/tsconfig.app.json"
       }
     },
-    "admin": {
-      "type": "application",
-      "root": "apps/admin",
-      "entryFile": "main",
-      "sourceRoot": "apps/admin/src",
-      "compilerOptions": {
-        "tsConfigPath": "apps/admin/tsconfig.app.json"
-      }
-    },
     "entity": {
       "type": "library",
       "root": "libs/entity",
