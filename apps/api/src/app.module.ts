@@ -3,9 +3,18 @@ import { AppConfigModule } from './config/app/config.module';
 import { AppConfigService } from './config/app/config.service';
 import { ApiErrorLogger } from '@app/common-config/logger/ApiErrorLogger';
 import { ApiSuccessLogger } from '@app/common-config/logger/ApiSuccessLogger';
+import { TypeOrmConfigModule } from './config/database/typeorm/config.module';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { TypeOrmConfigService } from './config/database/typeorm/config.service';
 
 @Module({
-  imports: [AppConfigModule],
+  imports: [
+    AppConfigModule,
+    TypeOrmModule.forRootAsync({
+      imports: [TypeOrmConfigModule],
+      useExisting: TypeOrmConfigService,
+    }),
+  ],
   controllers: [],
   providers: [Logger],
   exports: [Logger],
