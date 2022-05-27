@@ -18,7 +18,9 @@ describe('Test Module Integration Test', () => {
   });
 
   afterAll(async () => {
-    await connection.close();
+    if (connection && connection.isConnected) {
+      await connection.close();
+    }
   });
 
   test('insert Test Entity', async () => {

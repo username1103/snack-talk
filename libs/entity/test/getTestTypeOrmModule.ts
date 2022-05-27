@@ -14,5 +14,6 @@ export const getTestTypeOrmModule = () => {
     synchronize: true,
     entities: [envPath],
     namingStrategy: new SnakeNamingStrategy(),
+    toRetry: () => false,
   });
 };
