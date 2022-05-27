@@ -5,4 +5,7 @@ import { BaseEntity } from '../BaseEntity';
 export class Room extends BaseEntity {
   @Column()
   defaultName: string;
+
+  @Column()
+  createdBy: number;
 }
