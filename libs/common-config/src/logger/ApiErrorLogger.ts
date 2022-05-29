@@ -9,11 +9,7 @@ export class ApiErrorLogger implements NestMiddleware {
   private readonly logger = new Logger(ApiErrorLogger.name);
 
   constructor() {
-    morgan.token(
-      'message',
-      (req: Request, res: Response) =>
-        (res.locals.error && res.locals.error.message) || '',
-    );
+    morgan.token('message', (req: Request, res: Response) => (res.locals.error && res.locals.error.message) || '');
 
     morgan.token('client', (req: Request) => req.ip);
     morgan.token('data', (req: Request, res: Response) =>
@@ -34,8 +30,7 @@ export class ApiErrorLogger implements NestMiddleware {
     return morgan(this.errorResponseFormat, {
       skip: (_req: Request, _res: Response) => _res.statusCode < 400,
       stream: {
-        write: (message) =>
-          this.logger.error(message.trim(), undefined, ApiErrorLogger.name),
+        write: (message) => this.logger.error(message.trim(), undefined, ApiErrorLogger.name),
       },
     })(req, res, next);
   }

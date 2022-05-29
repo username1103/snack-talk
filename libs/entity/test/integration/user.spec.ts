@@ -29,6 +29,8 @@ describe('User Module Integration Test', () => {
     const user = new User();
     user.name = 'myeongil';
     user.nickname = 'hong3';
+    user.email = 'test@test.com';
+    user.password = 'test';
 
     await connection.getRepository(User).save(user);
 
@@ -40,6 +42,8 @@ describe('User Module Integration Test', () => {
       id: expect.any(Number),
       name: 'myeongil',
       nickname: 'hong3',
+      email: 'test@test.com',
+      password: 'test',
       createdAt: expect.any(Date),
       updatedAt: expect.any(Date),
     });

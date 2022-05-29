@@ -6,7 +6,6 @@ import { ApiSuccessLogger } from '@app/common-config/logger/ApiSuccessLogger';
 import { TypeOrmConfigModule } from './config/database/typeorm/config.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { TypeOrmConfigService } from './config/database/typeorm/config.service';
-import { TestModule } from '@app/entity/domain/test/test.module';
 import { AppController } from './app.controller';
 
 @Module({
@@ -16,7 +15,6 @@ import { AppController } from './app.controller';
       imports: [TypeOrmConfigModule],
       useExisting: TypeOrmConfigService,
     }),
-    TestModule,
   ],
   controllers: [AppController],
   providers: [Logger],
