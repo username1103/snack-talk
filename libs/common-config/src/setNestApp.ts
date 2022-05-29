@@ -8,6 +8,7 @@ import {
 import { Reflector } from '@nestjs/core';
 import helmet from 'helmet';
 import { AllExceptionFilter } from './exception/AllExceptionFilter';
+import { NotFoundExceptionFilter } from './exception/NotFoundExceptionFilter';
 import { ValidationException } from './exception/ValidationException';
 
 export function setNestApp(app: INestApplication) {
@@ -26,7 +27,8 @@ export function setNestApp(app: INestApplication) {
     type: VersioningType.URI,
     defaultVersion: '1',
   });
-  app.useGlobalFilters(new AllExceptionFilter());
+
+  app.useGlobalFilters(new AllExceptionFilter(), new NotFoundExceptionFilter());
   app.useGlobalPipes(
     new ValidationPipe({
       transform: true,
