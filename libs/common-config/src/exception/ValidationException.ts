@@ -4,6 +4,6 @@ import { ErrorInfo } from './ErrorInfo';
 
 export class ValidationException extends BadRequestException {
   constructor(message: string) {
-    super(new ErrorInfo(ResponseStatus.INVALID_INPUT, message));
+    super(new ErrorInfo(ResponseStatus.BAD_PARAMETERS, message));
   }
 }

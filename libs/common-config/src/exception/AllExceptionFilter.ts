@@ -7,7 +7,6 @@ import { ErrorInfo } from './ErrorInfo';
 @Catch()
 export class AllExceptionFilter implements ExceptionFilter {
   catch(exception: HttpException, host: ArgumentsHost) {
-    console.log(exception);
     const ctx = host.switchToHttp();
     const response = ctx.getResponse<Response>();
 
