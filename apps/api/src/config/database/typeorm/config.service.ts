@@ -12,13 +12,8 @@ export class TypeOrmConfigService implements TypeOrmOptionsFactory {
     private readonly appConfigService: AppConfigService,
   ) {}
 
-  createTypeOrmOptions(
-    connectionName?: string,
-  ): TypeOrmModuleOptions | Promise<TypeOrmModuleOptions> {
-    const entityPath = path.resolve(
-      __dirname,
-      '../../../../../../libs/entity/src/**/*.entity.{js,ts}',
-    );
+  createTypeOrmOptions(connectionName?: string): TypeOrmModuleOptions | Promise<TypeOrmModuleOptions> {
+    const entityPath = path.resolve(__dirname, '../../../../../../libs/entity/src/**/*.entity.{js,ts}');
     return {
       type: 'mysql',
       name: connectionName,
@@ -27,9 +22,7 @@ export class TypeOrmConfigService implements TypeOrmOptionsFactory {
       username: this.mysqlConfigService.userName,
       password: this.mysqlConfigService.passwrod,
       database: this.mysqlConfigService.dbName,
-      logging: this.appConfigService.isDevelopment()
-        ? 'all'
-        : ['error', 'warn'],
+      logging: this.appConfigService.isDevelopment() ? 'all' : ['error', 'warn'],
       entities: [entityPath],
       autoLoadEntities: true,
       synchronize: this.appConfigService.isProduction() ? false : true,
