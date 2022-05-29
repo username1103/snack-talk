@@ -1,6 +1,7 @@
 import {
   ClassSerializerInterceptor,
   INestApplication,
+  Logger,
   ValidationError,
   ValidationPipe,
   VersioningType,
@@ -26,8 +27,9 @@ export function setNestApp(app: INestApplication) {
     type: VersioningType.URI,
     defaultVersion: '1',
   });
+  const logger = app.get(Logger);
 
-  app.useGlobalFilters(new AllExceptionFilter());
+  app.useGlobalFilters(new AllExceptionFilter(logger));
   app.useGlobalPipes(
     new ValidationPipe({
       transform: true,

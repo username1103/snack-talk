@@ -4,6 +4,7 @@ import {
   ExceptionFilter,
   HttpException,
   InternalServerErrorException,
+  Logger,
   NotFoundException,
 } from '@nestjs/common';
 import { instanceToPlain } from 'class-transformer';
@@ -14,6 +15,8 @@ import { ErrorInfo } from './ErrorInfo';
 
 @Catch()
 export class AllExceptionFilter implements ExceptionFilter {
+  constructor(private readonly logger: Logger) {}
+
   catch(exception: HttpException, host: ArgumentsHost) {
     const ctx = host.switchToHttp();
     const response = ctx.getResponse<Response>();
@@ -22,6 +25,10 @@ export class AllExceptionFilter implements ExceptionFilter {
     const responseEntity = this.getResponse(exception);
     const status = exception.getStatus();
     response.locals.error = instanceToPlain(exception.getResponse());
+
+    if (process.env.NODE_ENV === 'development') {
+      this.logger.error(exception);
+    }
 
     response.status(status).json(instanceToPlain(responseEntity));
   }
