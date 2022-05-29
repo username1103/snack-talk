@@ -22,25 +22,14 @@ export class ResponseEntity<T> {
   }
 
   static ERROR() {
-    return new ResponseEntity<string>(
-      ResponseStatus.INTERNEL_SERVER_ERROR,
-      '알 수 없는 에러가 발생했습니다',
-      '',
-    );
+    return new ResponseEntity<string>(ResponseStatus.INTERNEL_SERVER_ERROR, '알 수 없는 에러가 발생했습니다', '');
   }
 
-  static ERROR_WITH(
-    message: string,
-    status: ResponseStatus = ResponseStatus.INTERNEL_SERVER_ERROR,
-  ) {
+  static ERROR_WITH(message: string, status: ResponseStatus = ResponseStatus.INTERNEL_SERVER_ERROR) {
     return new ResponseEntity<string>(status, message, '');
   }
 
-  static ERROR_WITH_DATA<T>(
-    message: string,
-    status: ResponseStatus = ResponseStatus.INTERNEL_SERVER_ERROR,
-    data: T,
-  ) {
+  static ERROR_WITH_DATA<T>(message: string, status: ResponseStatus = ResponseStatus.INTERNEL_SERVER_ERROR, data: T) {
     return new ResponseEntity<T>(status, message, data);
   }
 
