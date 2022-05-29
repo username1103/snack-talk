@@ -21,6 +21,7 @@ export class AllExceptionFilter implements ExceptionFilter {
     exception = this.convert(exception);
     const responseEntity = this.getResponse(exception);
     const status = exception.getStatus();
+    response.locals.error = instanceToPlain(exception.getResponse());
 
     response.status(status).json(instanceToPlain(responseEntity));
   }
