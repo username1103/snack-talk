@@ -1,7 +1,15 @@
-import { ArgumentsHost, Catch, ExceptionFilter, HttpException, InternalServerErrorException } from '@nestjs/common';
+import {
+  ArgumentsHost,
+  Catch,
+  ExceptionFilter,
+  HttpException,
+  InternalServerErrorException,
+  NotFoundException,
+} from '@nestjs/common';
 import { instanceToPlain } from 'class-transformer';
 import { Response } from 'express';
 import { ResponseEntity } from '../response/ResponseEntity';
+import { ApiNotFoundException } from './ApiNotFoundException';
 import { ErrorInfo } from './ErrorInfo';
 
 @Catch()
@@ -20,6 +28,10 @@ export class AllExceptionFilter implements ExceptionFilter {
   convert(exception: Error) {
     if (!(exception instanceof HttpException)) {
       return new InternalServerErrorException();
+    }
+
+    if (exception.constructor.name === NotFoundException.name) {
+      return new ApiNotFoundException();
     }
 
     const responseBody = exception.getResponse();
