@@ -31,7 +31,7 @@ export class ErrorInfo<T> {
     return this._message;
   }
 
-  @Expose()
+  @Exclude()
   get isOperational() {
     return this._isOperational;
   }
