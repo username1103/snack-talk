@@ -14,7 +14,7 @@ export class ErrorInfo<T> {
   @Exclude()
   private readonly _data?: T;
 
-  constructor(errorCode: ResponseStatus, message: string, isOperational = true, data?: T) {
+  constructor(errorCode: ResponseStatus, message: string, data?: T, isOperational = true) {
     this._errorCode = errorCode;
     this._message = message;
     this._isOperational = isOperational;
@@ -31,7 +31,7 @@ export class ErrorInfo<T> {
     return this._message;
   }
 
-  @Expose()
+  @Exclude()
   get isOperational() {
     return this._isOperational;
   }

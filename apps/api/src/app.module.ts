@@ -7,6 +7,7 @@ import { TypeOrmConfigModule } from './config/database/typeorm/config.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { TypeOrmConfigService } from './config/database/typeorm/config.service';
 import { AppController } from './app.controller';
+import { JwtAuthModule } from './common/auth/jwt-auth.module';
 
 @Module({
   imports: [
@@ -15,6 +16,7 @@ import { AppController } from './app.controller';
       imports: [TypeOrmConfigModule],
       useExisting: TypeOrmConfigService,
     }),
+    JwtAuthModule,
   ],
   controllers: [AppController],
   providers: [Logger],

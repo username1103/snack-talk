@@ -2,10 +2,7 @@ import { ICodeName } from '@app/entity/enum/ICodeName';
 import { Enum, EnumType } from 'ts-jenum';
 
 @Enum('_code')
-export class TokenType
-  extends EnumType<TokenType>()
-  implements ICodeName<TokenType>
-{
+export class TokenType extends EnumType<TokenType>() implements ICodeName<TokenType> {
   static readonly ACCESS = new TokenType('ACCESS', '엑세스토큰');
 
   static readonly REFRESH = new TokenType('REFRESH', '리프레시토큰');
@@ -22,7 +19,18 @@ export class TokenType
     return this._name;
   }
 
-  equals(v: TokenType): boolean {
-    return this._code === v._code;
+  equals(code: string): boolean;
+
+  equals(v: TokenType): boolean;
+
+  equals(v: string | TokenType) {
+    let isEquals = false;
+
+    if (v instanceof TokenType) {
+      isEquals = this.code === v.code;
+    } else if (typeof v === 'string') {
+      isEquals = this.code === v;
+    }
+    return isEquals;
   }
 }
