@@ -2,8 +2,8 @@ import { TokenType } from '@app/entity/domain/token/type/TokenType';
 import { User } from '@app/entity/domain/user/user.entity';
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { instanceToPlain, plainToInstance } from 'class-transformer';
-import moment from 'moment';
+import { plainToInstance } from 'class-transformer';
+import moment, { Moment } from 'moment';
 import { JwtConfigService } from '../../config/jwt/config.service';
 import { InvalidTokenException } from '../exception/InvalidTokenException';
 import { TokenPayload } from './type/TokenPayload';
@@ -12,38 +12,40 @@ import { TokenPayload } from './type/TokenPayload';
 export class TokenService {
   constructor(private readonly jwtService: JwtService, private readonly jwtConfigService: JwtConfigService) {}
 
-  private generateToken(tokenPayload: TokenPayload) {
-    return this.jwtService.sign(instanceToPlain(tokenPayload));
+  private generateToken(sub: number, exp: Moment, type: TokenType) {
+    const payload: TokenPayload = {
+      sub,
+      iat: moment().unix(),
+      exp: exp.unix(),
+      type: type.code,
+    };
+    return this.jwtService.sign(payload);
   }
 
   generateAuthToken(user: User) {
     const accessTokenExpires = moment().add(this.jwtConfigService.accessTokenExpireMinutes, 'minutes');
-    const accessToken = this.generateToken(
-      new TokenPayload({ sub: user.id, exp: accessTokenExpires, type: TokenType.ACCESS }),
-    );
+    const accessToken = this.generateToken(user.id, accessTokenExpires, TokenType.ACCESS);
 
     const refreshTokenExpires = moment().add(this.jwtConfigService.refreshTokenExpireDays, 'days');
-    const refreshToken = this.generateToken(
-      new TokenPayload({ sub: user.id, exp: refreshTokenExpires, type: TokenType.REFRESH }),
-    );
+    const refreshToken = this.generateToken(user.id, refreshTokenExpires, TokenType.REFRESH);
 
     return {
       accessToken,
       refreshToken,
-      usr_id: user.id,
+      userId: user.id,
     };
   }
 
   verifyToken(token: string, tokenType: TokenType) {
     try {
       const payload = this.jwtService.verify(token);
-      const convertedPayload = plainToInstance(TokenPayload, payload);
+      const convertedPaylaod = plainToInstance(TokenPayload, payload);
 
-      if (!convertedPayload.isEquals(tokenType)) {
+      if (!tokenType.equals(convertedPaylaod.type)) {
         throw new Error('Invalid Token Type');
       }
 
-      return convertedPayload;
+      return payload;
     } catch (e) {
       throw new InvalidTokenException();
     }
