@@ -6,8 +6,8 @@ import { ApiSuccessLogger } from '@app/common-config/logger/ApiSuccessLogger';
 import { TypeOrmConfigModule } from './config/database/typeorm/config.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { TypeOrmConfigService } from './config/database/typeorm/config.service';
-import { AppController } from './app.controller';
 import { JwtAuthModule } from './common/auth/jwt-auth.module';
+import { SwaggerConfigModule } from './config/swagger/config.module';
 
 @Module({
   imports: [
@@ -17,8 +17,9 @@ import { JwtAuthModule } from './common/auth/jwt-auth.module';
       useExisting: TypeOrmConfigService,
     }),
     JwtAuthModule,
+    SwaggerConfigModule,
   ],
-  controllers: [AppController],
+  controllers: [],
   providers: [Logger],
 })
 export class ApiAppModule implements NestModule {

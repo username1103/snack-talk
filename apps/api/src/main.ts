@@ -5,12 +5,15 @@ import { AppConfigService } from './config/app/config.service';
 import { setNestApp } from '@app/common-config/setNestApp';
 import { WinstonModule } from 'nest-winston';
 import { getLogger } from '@app/common-config/logger/getLogger';
+import { setSwagger } from './common/setSwagger';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(ApiAppModule, {
     cors: true,
     logger: WinstonModule.createLogger(getLogger(process.env.NODE_ENV, 'API')),
   });
+
+  setSwagger(app);
 
   setNestApp(app);
 

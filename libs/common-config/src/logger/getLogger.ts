@@ -31,17 +31,12 @@ const getMaxShowingLevel = (env: string) => {
   }
 };
 
-export const getLogger = (
-  env: string,
-  moduleName: string,
-): winston.LoggerOptions => {
+export const getLogger = (env: string, moduleName: string): winston.LoggerOptions => {
   winston.addColors(CUSTOM_COLOR);
   return {
     levels: CUSTOM_LEVEL,
     format: winston.format.combine(
-      env === 'development'
-        ? winston.format.colorize()
-        : winston.format.uncolorize(),
+      env === 'development' ? winston.format.colorize() : winston.format.uncolorize(),
       winston.format.printf(({ context, level, stack, message }) => {
         return [
           `[${moduleName}]`,
