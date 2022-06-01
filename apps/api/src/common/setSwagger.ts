@@ -8,7 +8,7 @@ export function setSwagger(app: INestApplication) {
   const swaggerConfigService = app.get(SwaggerConfigService);
 
   app.use(
-    ['/v1/docs', 'v1/docs-json'],
+    ['/v1/docs', '/v1/docs-json'],
     expressBasicAuth({
       users: { [swaggerConfigService.id]: swaggerConfigService.password },
       challenge: true,
