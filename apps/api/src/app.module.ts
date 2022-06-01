@@ -8,6 +8,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { TypeOrmConfigService } from './config/database/typeorm/config.service';
 import { JwtAuthModule } from './common/auth/jwt-auth.module';
 import { SwaggerConfigModule } from './config/swagger/config.module';
+import { UserApiModule } from './app/user/user.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { SwaggerConfigModule } from './config/swagger/config.module';
     }),
     JwtAuthModule,
     SwaggerConfigModule,
+    UserApiModule,
   ],
   controllers: [],
   providers: [Logger],
