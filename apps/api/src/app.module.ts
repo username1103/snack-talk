@@ -6,9 +6,10 @@ import { ApiSuccessLogger } from '@app/common-config/logger/ApiSuccessLogger';
 import { JwtAuthModule } from './common/auth/jwt-auth.module';
 import { SwaggerConfigModule } from './config/swagger/config.module';
 import { DataBaseModule } from './config/database/database.module';
+import { UserApiModule } from './app/user/user.module';
 
 @Module({
-  imports: [AppConfigModule, DataBaseModule, JwtAuthModule, SwaggerConfigModule],
+  imports: [AppConfigModule, DataBaseModule, JwtAuthModule, SwaggerConfigModule, UserApiModule],
   controllers: [],
   providers: [Logger],
 })
