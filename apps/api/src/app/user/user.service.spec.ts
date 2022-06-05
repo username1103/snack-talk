@@ -27,6 +27,7 @@ describe('UserService', () => {
   afterAll(async () => {
     await connection.close();
   });
+
   describe('findOne', () => {
     test('해당하는 id의 유저정보를 가져오는가', async () => {
       // given
