@@ -1,12 +1,11 @@
-import { UserModule } from '@app/entity/domain/user/user.module';
 import { Module } from '@nestjs/common';
-import { UserApiController } from './user.controller';
-import { UserApiService } from './user.service';
+import { UserService } from './user.service';
+import { UserController } from './user.controller';
+import { UserModule } from '@app/entity/domain/user/user.module';
 
 @Module({
   imports: [UserModule],
-  controllers: [UserApiController],
-  providers: [UserApiService],
-  exports: [],
+  controllers: [UserController],
+  providers: [UserService],
 })
 export class UserApiModule {}
