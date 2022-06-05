@@ -28,7 +28,6 @@ describe('User Module Integration Test', () => {
     // given
     const user = new User();
     user.name = 'myeongil';
-    user.nickname = 'hong3';
     user.email = 'test@test.com';
     user.password = 'test';
 
@@ -41,7 +40,6 @@ describe('User Module Integration Test', () => {
     expect(savedUser).toMatchObject({
       id: expect.any(Number),
       name: 'myeongil',
-      nickname: 'hong3',
       email: 'test@test.com',
       password: 'test',
       createdAt: expect.any(Date),

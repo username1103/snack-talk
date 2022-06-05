@@ -7,8 +7,8 @@ export const getTestTypeOrmModule = () => {
   return TypeOrmModule.forRoot({
     type: 'mysql',
     host: 'localhost',
-    username: 'test',
-    password: 'test',
+    username: 'root',
+    password: 'admin',
     database: 'toy-nestjs-test',
     autoLoadEntities: true,
     synchronize: true,
