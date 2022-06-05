@@ -7,7 +7,7 @@ export class ResponseEntity<T> {
   @Exclude() private readonly _message: string;
   @Exclude() private readonly _data: T;
 
-  private constructor(status: string, message: string, data: T) {
+  protected constructor(status: string, message: string, data: T) {
     this._status = status;
     this._message = message;
     this._data = data;
@@ -33,20 +33,20 @@ export class ResponseEntity<T> {
     return new ResponseEntity<T>(status, message, data);
   }
 
-  @ApiProperty()
   @Expose()
+  @ApiProperty({ example: 'OK' })
   get status(): string {
     return this._status;
   }
 
-  @ApiProperty()
   @Expose()
+  @ApiProperty({ example: '' })
   get message(): string {
     return this._message;
   }
 
-  @ApiProperty()
   @Expose()
+  @ApiProperty()
   get data(): T {
     return this._data;
   }

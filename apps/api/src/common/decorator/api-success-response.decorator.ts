@@ -7,7 +7,7 @@ export function ApiSuccessResponse(status: number, data: Type<unknown> | Functio
   class Temp extends ResponseEntity<any> {
     @ApiProperty({ type: data })
     get data() {
-      return this.data;
+      return super.data;
     }
   }
   return applyDecorators(HttpCode(status), ApiResponse({ type: Temp, status }));

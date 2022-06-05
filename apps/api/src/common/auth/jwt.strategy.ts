@@ -17,17 +17,26 @@ export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
   }
 
   async validate(payload: TokenPayload) {
-    const tokenType = TokenType.valueOf(payload.type);
+    try {
+      const tokenType = TokenType.valueOf(payload.type);
 
-    if (!tokenType.equals(TokenType.ACCESS)) {
-      throw new Error('Invalid Token Type');
+      if (!tokenType.equals(TokenType.ACCESS)) {
+        throw new Error('Invalid Token Type');
+      }
+
+      if (!payload.sub) {
+        throw new Error('Invalid sub');
+      }
+
+      const user = this.userQueryRepository.findOne(payload.sub);
+
+      if (!user) {
+        throw new Error('User not found');
+      }
+
+      return user;
+    } catch (e) {
+      throw new Error(`Invalid Token: ${e.message}`);
     }
-
-    const user = this.userQueryRepository.findOne(payload.sub);
-    if (!user) {
-      throw new Error('User not found');
-    }
-
-    return user;
   }
 }

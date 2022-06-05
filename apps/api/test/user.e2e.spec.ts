@@ -6,6 +6,7 @@ import { Test } from '@nestjs/testing';
 import request from 'supertest';
 import { getConnection, getRepository } from 'typeorm';
 import { ApiAppModule } from '../src/app.module';
+import { AccessToken } from './utils/token';
 
 describe('User Api Module E2E Test', () => {
   let app: INestApplication;
@@ -41,7 +42,11 @@ describe('User Api Module E2E Test', () => {
       await getRepository(User).save(user);
 
       // when
-      const res = await request(server).get(url(user.id)).send().expect(HttpStatus.OK);
+      const res = await request(server)
+        .get(url(user.id))
+        .set({ Authorization: AccessToken.of(user).bearerForm })
+        .send()
+        .expect(HttpStatus.OK);
 
       // then
 
@@ -58,8 +63,18 @@ describe('User Api Module E2E Test', () => {
 
     test('해당하는 유저정보가 없으면 UserNotFoundException에러가 발생하는가', async () => {
       // given
+      const user = new User();
+      user.name = 'tester002';
+      user.email = 'test@test.com';
+      user.password = 'testpassword';
+
+      await getRepository(User).save(user);
+
       // when
-      const res = await request(server).get(url(1)).send();
+      const res = await request(server)
+        .get(url(user.id + 1))
+        .set({ Authorization: AccessToken.of(user).bearerForm })
+        .send();
 
       // then
       expect(res.body).toMatchObject({
