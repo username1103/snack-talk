@@ -3,24 +3,12 @@ import { AppConfigModule } from './config/app/config.module';
 import { AppConfigService } from './config/app/config.service';
 import { ApiErrorLogger } from '@app/common-config/logger/ApiErrorLogger';
 import { ApiSuccessLogger } from '@app/common-config/logger/ApiSuccessLogger';
-import { TypeOrmConfigModule } from './config/database/typeorm/config.module';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { TypeOrmConfigService } from './config/database/typeorm/config.service';
 import { JwtAuthModule } from './common/auth/jwt-auth.module';
 import { SwaggerConfigModule } from './config/swagger/config.module';
-import { UserApiModule } from './app/user/user.module';
+import { DataBaseModule } from './config/database/database.module';
 
 @Module({
-  imports: [
-    AppConfigModule,
-    TypeOrmModule.forRootAsync({
-      imports: [TypeOrmConfigModule],
-      useExisting: TypeOrmConfigService,
-    }),
-    JwtAuthModule,
-    SwaggerConfigModule,
-    UserApiModule,
-  ],
+  imports: [AppConfigModule, DataBaseModule, JwtAuthModule, SwaggerConfigModule],
   controllers: [],
   providers: [Logger],
 })
