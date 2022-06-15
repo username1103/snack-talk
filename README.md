@@ -108,7 +108,7 @@ issue: #3, #4
 ##  📝 Commit Message Convention
 
 - feat: 신기능 추가 및 수정
-- docs: 문서 나 명세 
+- docs: 문서 나 명세 작성
 - test: 테스트 작성
 - refact: 리팩터링
 - chore: 기능 변경 및 추가가아닌 간단한 수정(빌드 스크립트 수정이나 디펜던시 업데이트 등)
