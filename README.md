@@ -40,19 +40,7 @@ Socket 기반의 채팅 앱을 제작하는 토이 프로젝트입니다.
       <td align="center">👀</td>
     </tr>
     <tr>
-      <td>네비게이션 디자인</td>
-      <td align="center"></td>
-    </tr>
-    <tr>
-      <td>Common UI 디자인</td>
-      <td align="center"></td>
-    </tr>
-    <tr>
-      <td>Splash Screen 구현</td>
-      <td align="center"></td>
-    </tr>
-    <tr>
-      <td>네비게이션 구현</td>
+      <td>앱 레이아웃 디자인</td>
       <td align="center"></td>
     </tr>
     <tr>
@@ -65,7 +53,7 @@ Socket 기반의 채팅 앱을 제작하는 토이 프로젝트입니다.
       <td align="center"></td>
     </tr>
     <tr>
-      <td>회원가입/로그인 구현</td>
+      <td>회원기능 구현</td>
       <td align="center"></td>
     </tr>
     <tr>
