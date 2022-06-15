@@ -64,6 +64,68 @@ Socket 기반의 채팅 앱을 제작하는 토이 프로젝트입니다.
 </table>
 <br/>
 
+
+## 🎋 Branch
+
+server, client 브랜치 분리  
+
+### Naming Convention
+
+```
+#issueNumber-{feat|docs|test|refact|chore}/{comment}
+
+ex) #3-feat/create-user
+```
+
+### git flow
+
+1. 이슈에 따른 브랜치 생성 후 server or client로 pr 생성
+2. 개발 진행
+3. 셀프 리뷰
+4. 커밋 메시지 작성
+```
+{feat|docs|test|refact|chore}: {제목} 
+
+{세부사항}
+
+issue: {#issueNumber}
+
+ex)
+feat: 유저 모듈 추가
+
+- POST /v1/users 추가
+- GET /v1/users 추가
+- PUT /v1/users/:userId/name 추가
+- DELETE /v1/users/:userId 추가
+
+issue: #3, #4
+```
+5. 머지
+6. 마일스톤 단위로 master에 pr생성 및 리뷰 요청
+7. 리뷰 후 병합
+
+
+##  📝 Commit Message Convention
+
+```
+// 제목까지만 필수
+{feat|docs|test|refact|chore}: {제목} 
+
+[세부사항]
+
+[issue: #issueNumber]
+
+ex)
+feat: 유저 모듈 추가
+
+- 유저 컨트롤러 추가
+- 유저 서비스 추가
+- 유저 엔티티 추가
+- 유저 레퍼지토리 추가
+
+issue: #3
+```
+
 ## ✨ Tech Stack
 ### Backend
 <div>
