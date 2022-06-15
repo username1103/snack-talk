@@ -18,7 +18,7 @@ Socket 기반의 채팅 앱을 제작하는 토이 프로젝트입니다.
   <tbody>
     <tr>
       <td align="center"><strong>스택 및 라이브러리 setting</strong></td>
-      <td>-</td>
+      <td>협업 환경 </td>
       <td align="center">✅</td>
     </tr>
     <tr>
