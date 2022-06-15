@@ -72,9 +72,9 @@ server, client 브랜치 분리
 ### Naming Convention
 
 ```
-#issueNumber-{feat|docs|test|refact|chore}/{comment}
+issueNumber-{feat|docs|test|refact|chore}/{comment}
 
-ex) #3-feat/create-user
+ex) 3-feat/create-user
 ```
 
 ### git flow
