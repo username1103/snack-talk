@@ -136,7 +136,7 @@ issue: #3
 <div>
   <img src="https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=TypeScript&logoColor=white"/>
   <img src="https://img.shields.io/badge/NestJS-E0234E?style=for-the-badge&logo=NestJS"/>
-  <img src="https://img.shields.io/badge/Typeform-262627?style=for-the-badge&logo=Typeform"/>
+  <img src="https://img.shields.io/badge/TypeORM-f5f5f5?style=for-the-badge"/>
   <img src="https://img.shields.io/badge/Jest-C21325?style=for-the-badge&logo=Jest"/>
   <img src="https://img.shields.io/badge/Swagger-85EA2D?style=for-the-badge&logo=Swagger&logoColor=black"/>
 </div>
