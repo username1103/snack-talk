@@ -5,9 +5,5 @@ import { JwtAuthGuard } from '../guard/jwt-auth.guard';
 import { ApiErrorResponse } from './api-error-response.decorator';
 
 export function Auth() {
-  return applyDecorators(
-    UseGuards(JwtAuthGuard),
-    ApiBearerAuth('bearerAuth'),
-    ApiErrorResponse(new InvalidTokenException()),
-  );
+  return applyDecorators(UseGuards(JwtAuthGuard), ApiBearerAuth('bearerAuth'), ApiErrorResponse(InvalidTokenException));
 }

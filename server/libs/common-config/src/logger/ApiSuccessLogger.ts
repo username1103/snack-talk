@@ -9,11 +9,7 @@ export class ApiSuccessLogger implements NestMiddleware {
   private readonly logger = new Logger(ApiSuccessLogger.name);
 
   constructor() {
-    morgan.token(
-      'message',
-      (_: Request, res: Response) =>
-        (res.locals.error && res.locals.error.message) || '',
-    );
+    morgan.token('message', (_: Request, res: Response) => (res.locals.error && res.locals.error.message) || '');
 
     morgan.token('client', (req: Request) => req.ip);
 

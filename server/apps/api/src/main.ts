@@ -10,7 +10,7 @@ import { setSwagger } from './common/setSwagger';
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(ApiAppModule, {
     cors: true,
-    logger: WinstonModule.createLogger(getLogger(process.env.NODE_ENV, 'API')),
+    logger: WinstonModule.createLogger(getLogger('API')),
   });
 
   setSwagger(app);
@@ -22,4 +22,5 @@ async function bootstrap() {
   const appConfigService = app.get(AppConfigService);
   await app.listen(appConfigService.port);
 }
+
 bootstrap();

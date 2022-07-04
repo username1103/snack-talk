@@ -17,7 +17,7 @@ export class UserController {
   @Get('/:id')
   @Auth()
   @ApiSuccessResponse(HttpStatus.OK, UserDto)
-  @ApiErrorResponse(new UserNotFoundException())
+  @ApiErrorResponse(UserNotFoundException)
   async get(@Param() param: UserId) {
     const user = await this.userService.findOne(param.id);
 

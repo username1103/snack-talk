@@ -1,5 +1,6 @@
 import {
   ArgumentsHost,
+  BadRequestException,
   Catch,
   ExceptionFilter,
   HttpException,
@@ -11,6 +12,7 @@ import { instanceToPlain } from 'class-transformer';
 import { Response } from 'express';
 import { ResponseEntity } from '../response/ResponseEntity';
 import { ApiNotFoundException } from './ApiNotFoundException';
+import { BadParameterException } from './BadParameterException';
 import { ErrorInfo } from './ErrorInfo';
 
 @Catch()
@@ -27,7 +29,7 @@ export class AllExceptionFilter implements ExceptionFilter {
     response.locals.error = instanceToPlain(exception.getResponse());
 
     if (process.env.NODE_ENV === 'development') {
-      this.logger.error(exception);
+      this.logger.error(exception.stack);
     }
 
     response.status(status).json(instanceToPlain(responseEntity));
@@ -40,6 +42,10 @@ export class AllExceptionFilter implements ExceptionFilter {
 
     if (exception.constructor.name === NotFoundException.name) {
       return new ApiNotFoundException();
+    }
+
+    if (exception.constructor.name === BadRequestException.name) {
+      return new BadParameterException(exception.message);
     }
 
     const responseBody = exception.getResponse();
