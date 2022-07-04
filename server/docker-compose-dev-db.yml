@@ -1,6 +1,6 @@
 version: '3'
 services:
-  mysql:
+  mysql-development:
     platform: linux/x86_64
     image: 'mysql:5.7.10'
     ports:
@@ -9,4 +9,4 @@ services:
       MYSQL_ROOT_PASSWORD: 'admin'
       MYSQL_USER: 'test'
       MYSQL_PASSWORD: 'test'
-      MYSQL_DATABASE: 'developement'
+      MYSQL_DATABASE: 'development'
