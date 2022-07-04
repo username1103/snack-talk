@@ -1,4 +1,4 @@
-import { UserQureyRepository } from '@app/entity/domain/user/user-query.repository';
+import { UserRepository } from '@app/entity/domain/user/user.repository';
 import { User } from '@app/entity/domain/user/user.entity';
 import { UserModule } from '@app/entity/domain/user/user.module';
 import { Test } from '@nestjs/testing';
@@ -7,7 +7,7 @@ import { getTestTypeOrmModule } from '../getTestTypeOrmModule';
 
 describe('User Module Integration Test', () => {
   let connection: Connection;
-  let userQueryRepository: UserQureyRepository;
+  let userQueryRepository: UserRepository;
 
   beforeAll(async () => {
     const moduleRef = await Test.createTestingModule({
@@ -15,7 +15,7 @@ describe('User Module Integration Test', () => {
     }).compile();
 
     connection = getConnection();
-    userQueryRepository = moduleRef.get(UserQureyRepository);
+    userQueryRepository = moduleRef.get(UserRepository);
   });
 
   afterAll(async () => {
@@ -27,9 +27,7 @@ describe('User Module Integration Test', () => {
   test('유저정보가 잘 읽어지는가', async () => {
     // given
     const user = new User();
-    user.name = 'myeongil';
-    user.email = 'test@test.com';
-    user.password = 'test';
+    user.phone = '01050568216';
 
     await connection.getRepository(User).save(user);
 
@@ -39,9 +37,7 @@ describe('User Module Integration Test', () => {
     // then
     expect(savedUser).toMatchObject({
       id: expect.any(Number),
-      name: 'myeongil',
-      email: 'test@test.com',
-      password: 'test',
+      phone: '01050568216',
       createdAt: expect.any(Date),
       updatedAt: expect.any(Date),
     });

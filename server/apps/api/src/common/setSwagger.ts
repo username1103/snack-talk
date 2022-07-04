@@ -3,7 +3,6 @@ import { INestApplication } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import expressBasicAuth from 'express-basic-auth';
 import { AuthApiModule } from '../app/auth/auth.module';
-import { UserApiModule } from '../app/user/user.module';
 import { SwaggerConfigService } from '../config/swagger/config.service';
 
 export function setSwagger(app: INestApplication) {
@@ -25,7 +24,7 @@ export function setSwagger(app: INestApplication) {
     .build();
 
   const document = SwaggerModule.createDocument(app, config, {
-    include: [UserApiModule, AuthApiModule],
+    include: [AuthApiModule],
     extraModels: [ResponseEntity],
   });
 
