@@ -9,7 +9,7 @@ import {
 import { Reflector } from '@nestjs/core';
 import helmet from 'helmet';
 import { AllExceptionFilter } from './exception/AllExceptionFilter';
-import { ValidationException } from './exception/ValidationException';
+import { BadParameterException } from './exception/BadParameterException';
 
 export function setNestApp(app: INestApplication) {
   app.use(
@@ -27,6 +27,7 @@ export function setNestApp(app: INestApplication) {
     type: VersioningType.URI,
     defaultVersion: '1',
   });
+
   const logger = app.get(Logger);
 
   app.useGlobalFilters(new AllExceptionFilter(logger));
@@ -34,9 +35,7 @@ export function setNestApp(app: INestApplication) {
     new ValidationPipe({
       transform: true,
       exceptionFactory: (validationErrors: ValidationError[] = []) => {
-        return new ValidationException(
-          `Invalid value, property: ${validationErrors[0].property}, value: ${validationErrors[0].value}`,
-        );
+        return new BadParameterException(Object.keys(validationErrors[0].constraints).join(', '));
       },
     }),
   );
