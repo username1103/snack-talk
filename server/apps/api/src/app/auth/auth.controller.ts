@@ -10,7 +10,7 @@ import { RegisterRequest } from './dto/register-request.dto';
 import { SendPhoneCodeDto } from './dto/send-phone-code.dto';
 import { TokenResponse } from './dto/token-response.dto';
 
-@Controller('auth')
+@Controller('/auth')
 @ApiTags('Auth')
 export class AuthController {
   constructor(private readonly authService: AuthService, private readonly tokenService: TokenService) {}
@@ -23,8 +23,8 @@ export class AuthController {
 
   @Post('/register')
   @ApiErrorResponse(InvalidPhoneCodeException)
-  @ApiSuccessResponse(HttpStatus.OK, TokenResponse)
-  async verifyPhoneCode(@Body() body: RegisterRequest) {
+  @ApiSuccessResponse(HttpStatus.CREATED, TokenResponse)
+  async register(@Body() body: RegisterRequest) {
     const user = await this.authService.register(body.phone, body.code);
     const tokens = this.tokenService.generateAuthToken(user);
 
