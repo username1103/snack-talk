@@ -7,9 +7,10 @@ import { JwtAuthModule } from './common/auth/jwt-auth.module';
 import { SwaggerConfigModule } from './config/swagger/config.module';
 import { DataBaseModule } from './config/database/database.module';
 import { UserApiModule } from './app/user/user.module';
+import { AuthApiModule } from './app/auth/auth.module';
 
 @Module({
-  imports: [AppConfigModule, DataBaseModule, JwtAuthModule, SwaggerConfigModule, UserApiModule],
+  imports: [AppConfigModule, DataBaseModule, JwtAuthModule, SwaggerConfigModule, UserApiModule, AuthApiModule],
   controllers: [],
   providers: [Logger],
 })

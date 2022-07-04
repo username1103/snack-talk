@@ -9,7 +9,7 @@ export const getTestTypeOrmModule = () => {
     host: 'localhost',
     username: 'root',
     password: 'admin',
-    database: 'toy-nestjs-test',
+    database: 'test',
     autoLoadEntities: true,
     synchronize: true,
     entities: [envPath],
