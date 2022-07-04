@@ -1,4 +1,4 @@
-import { ResponseStatus } from '@app/common-config/response/ResponseStatus';
+import { CommonResponseStatus } from '@app/common-config/response/ResponseStatus';
 import { setNestApp } from '@app/common-config/setNestApp';
 import { User } from '@app/entity/domain/user/user.entity';
 import { HttpStatus, INestApplication } from '@nestjs/common';
@@ -6,6 +6,7 @@ import { Test } from '@nestjs/testing';
 import request from 'supertest';
 import { getConnection, getRepository } from 'typeorm';
 import { ApiAppModule } from '../src/app.module';
+import { ResponseStatus } from '../src/common/ResponseStatus';
 import { AccessToken } from './utils/token';
 
 describe('User Api Module E2E Test', () => {
@@ -51,7 +52,7 @@ describe('User Api Module E2E Test', () => {
       // then
 
       expect(res.body).toMatchObject({
-        status: ResponseStatus.OK,
+        status: CommonResponseStatus.OK,
         message: '',
         data: {
           id: expect.any(Number),
