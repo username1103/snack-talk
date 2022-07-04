@@ -3,12 +3,14 @@ import { applyDecorators, HttpException } from '@nestjs/common';
 import { ApiResponse, ApiResponseOptions, getSchemaPath } from '@nestjs/swagger';
 import { instanceToPlain } from 'class-transformer';
 
-export function ApiErrorResponse(...errors: HttpException[]) {
+// eslint-disable-next-line @typescript-eslint/ban-types
+export function ApiErrorResponse(...errors: { new (): HttpException }[]) {
   const apiResponses = {};
 
   errors.forEach((error) => {
-    const status = error.getStatus();
-    const response: any = error.getResponse();
+    const errorInstance = new error();
+    const status = errorInstance.getStatus();
+    const response: any = errorInstance.getResponse();
     if (!apiResponses[status]) {
       apiResponses[status] = {
         status,
