@@ -3,7 +3,6 @@ import { applyDecorators, HttpException } from '@nestjs/common';
 import { ApiResponse, ApiResponseOptions, getSchemaPath } from '@nestjs/swagger';
 import { instanceToPlain } from 'class-transformer';
 
-// eslint-disable-next-line @typescript-eslint/ban-types
 export function ApiErrorResponse(...errors: { new (): HttpException }[]) {
   const apiResponses = {};
 
@@ -27,7 +26,7 @@ export function ApiErrorResponse(...errors: { new (): HttpException }[]) {
         },
       };
     } else {
-      apiResponses[status].content.examples[response.errorCode] = {
+      apiResponses[status].content['application/json'].examples[response.errorCode] = {
         description: response.message,
         value: instanceToPlain(ResponseEntity.ERROR_WITH_DATA(response.message, response.errorCode, response.data)),
       };
