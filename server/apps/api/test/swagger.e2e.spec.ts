@@ -9,7 +9,7 @@ describe('Swagger Docs E2E Test', () => {
   let app: INestApplication;
   let server;
 
-  beforeAll(async () => {
+  beforeEach(async () => {
     const module = await Test.createTestingModule({
       imports: [ApiAppModule],
     }).compile();
@@ -25,7 +25,7 @@ describe('Swagger Docs E2E Test', () => {
     server = app.getHttpServer();
   });
 
-  afterAll(async () => {
+  afterEach(async () => {
     await app.close();
   });
 

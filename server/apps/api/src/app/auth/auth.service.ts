@@ -1,19 +1,15 @@
 import { UserProfile } from '@app/entity/domain/user-profile/user-profile.entity';
-import { UserProfileRepository } from '@app/entity/domain/user-profile/user-profile.repository';
 import { User } from '@app/entity/domain/user/user.entity';
 import { UserRepository } from '@app/entity/domain/user/user.repository';
 import { Injectable } from '@nestjs/common';
 import { Connection } from 'typeorm';
 import { AlreadyExistPhoneNumberException } from '../../common/exception/AlreadyExistPhoneNumberException';
 import { InvalidPhoneCodeException } from '../../common/exception/InvalidPhoneCodeException';
+import { UserNotFoundException } from '../../common/exception/UserNotFoundException';
 
 @Injectable()
 export class AuthService {
-  constructor(
-    private readonly userRepository: UserRepository,
-    private readonly userProfileRepository: UserProfileRepository,
-    private readonly connection: Connection,
-  ) {}
+  constructor(private readonly userRepository: UserRepository, private readonly connection: Connection) {}
 
   sendPhoneCode(phone: string) {
     // sending
@@ -26,7 +22,7 @@ export class AuthService {
       throw new InvalidPhoneCodeException();
     }
 
-    if (this.existsPhoneNumber(phone)) {
+    if (await this.existsPhoneNumber(phone)) {
       throw new AlreadyExistPhoneNumberException();
     }
 
@@ -40,6 +36,19 @@ export class AuthService {
       userProfile.user = Promise.resolve(user);
       await em.save(userProfile);
     });
+
+    return user;
+  }
+
+  async login(phone: string, code: string) {
+    if (!this.isValidPhoneCode(phone, code)) {
+      throw new InvalidPhoneCodeException();
+    }
+
+    const user = await this.userRepository.findOne({ phone });
+    if (!user) {
+      throw new UserNotFoundException();
+    }
 
     return user;
   }
