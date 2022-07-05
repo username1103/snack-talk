@@ -1,7 +1,6 @@
 import { StatusBar } from "expo-status-bar";
 import { useEffect, useState } from "react";
-import { StyleSheet, Text, View } from "react-native";
-import { SplashScreen } from "./screens";
+import { LoginScreen, SplashScreen } from "./screens";
 
 export default function App() {
   const [appIsReady, setAppIsReady] = useState(false);
@@ -12,17 +11,9 @@ export default function App() {
 
   if (!appIsReady) return <SplashScreen />;
   return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
+    <>
       <StatusBar style="auto" />
-    </View>
+      <LoginScreen />
+    </>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});
