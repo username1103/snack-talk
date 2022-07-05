@@ -2,13 +2,13 @@ import { ExtractJwt, Strategy } from 'passport-jwt';
 import { PassportStrategy } from '@nestjs/passport';
 import { Injectable } from '@nestjs/common';
 import { TokenType } from '@app/entity/domain/token/type/TokenType';
-import { UserQureyRepository } from '@app/entity/domain/user/user-query.repository';
+import { UserRepository } from '@app/entity/domain/user/user.repository';
 import { JwtConfigService } from '../../config/jwt/config.service';
 import { TokenPayload } from '../token/type/TokenPayload';
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
-  constructor(private readonly userQueryRepository: UserQureyRepository, jwtConfigService: JwtConfigService) {
+  constructor(private readonly userRepository: UserRepository, jwtConfigService: JwtConfigService) {
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
       ignoreExpiration: false,
@@ -28,7 +28,7 @@ export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
         throw new Error('Invalid sub');
       }
 
-      const user = this.userQueryRepository.findOne(payload.sub);
+      const user = this.userRepository.findOne(payload.sub);
 
       if (!user) {
         throw new Error('User not found');

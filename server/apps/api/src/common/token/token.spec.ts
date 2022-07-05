@@ -3,6 +3,9 @@ import { User } from '@app/entity/domain/user/user.entity';
 import { JwtService } from '@nestjs/jwt';
 import { Test } from '@nestjs/testing';
 import moment from 'moment';
+import { Connection } from 'typeorm';
+import { Token } from '@app/entity/domain/token/token.entity';
+import { DataBaseModule } from '../../config/database/database.module';
 import { InvalidTokenException } from '../exception/InvalidTokenException';
 import { TokenModule } from './token.module';
 import { TokenService } from './token.service';
@@ -10,14 +13,20 @@ import { TokenService } from './token.service';
 describe('Token Module Test', () => {
   let tokenService: TokenService;
   let jwtService: JwtService;
+  let connection: Connection;
 
-  beforeAll(async () => {
+  beforeEach(async () => {
     const module = await Test.createTestingModule({
-      imports: [TokenModule],
+      imports: [DataBaseModule, TokenModule],
     }).compile();
 
     tokenService = module.get(TokenService);
     jwtService = module.get(JwtService);
+    connection = module.get(Connection);
+  });
+
+  afterEach(async () => {
+    await connection.close();
   });
 
   describe('generateToken', () => {
@@ -41,7 +50,7 @@ describe('Token Module Test', () => {
       // when
       const tokens = tokenService.generateAuthToken(user);
       // then
-      expect(tokens).toMatchObject({
+      await expect(tokens).resolves.toMatchObject({
         accessToken: expect.any(String),
         refreshToken: expect.any(String),
         userId: user.id,

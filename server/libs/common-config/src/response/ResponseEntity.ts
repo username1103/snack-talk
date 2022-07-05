@@ -1,6 +1,6 @@
 import { Exclude, Expose } from 'class-transformer';
 import { ApiProperty } from '@nestjs/swagger';
-import { ResponseStatus } from './ResponseStatus';
+import { CommonResponseStatus } from './ResponseStatus';
 
 export class ResponseEntity<T> {
   @Exclude() private readonly _status: string;
@@ -14,22 +14,22 @@ export class ResponseEntity<T> {
   }
 
   static OK() {
-    return new ResponseEntity<string>(ResponseStatus.OK, '', '');
+    return new ResponseEntity<string>(CommonResponseStatus.OK, '', '');
   }
 
   static OK_WITH_DATA<T>(data: T) {
-    return new ResponseEntity<T>(ResponseStatus.OK, '', data);
+    return new ResponseEntity<T>(CommonResponseStatus.OK, '', data);
   }
 
   static ERROR() {
-    return new ResponseEntity<string>(ResponseStatus.INTERNEL_SERVER_ERROR, '알 수 없는 에러가 발생했습니다', '');
+    return new ResponseEntity<string>(CommonResponseStatus.INTERNEL_SERVER_ERROR, '알 수 없는 에러가 발생했습니다', '');
   }
 
-  static ERROR_WITH(message: string, status: ResponseStatus = ResponseStatus.INTERNEL_SERVER_ERROR) {
+  static ERROR_WITH(message: string, status: string = CommonResponseStatus.INTERNEL_SERVER_ERROR) {
     return new ResponseEntity<string>(status, message, '');
   }
 
-  static ERROR_WITH_DATA<T>(message: string, status: ResponseStatus = ResponseStatus.INTERNEL_SERVER_ERROR, data: T) {
+  static ERROR_WITH_DATA<T>(message: string, status: string = CommonResponseStatus.INTERNEL_SERVER_ERROR, data: T) {
     return new ResponseEntity<T>(status, message, data);
   }
 

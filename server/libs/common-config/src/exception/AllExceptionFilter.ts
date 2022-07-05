@@ -23,13 +23,13 @@ export class AllExceptionFilter implements ExceptionFilter {
     const ctx = host.switchToHttp();
     const response = ctx.getResponse<Response>();
 
-    exception = this.convert(exception);
-    const responseEntity = this.getResponse(exception);
-    const status = exception.getStatus();
-    response.locals.error = instanceToPlain(exception.getResponse());
+    const convertedException = this.convert(exception);
+    const responseEntity = this.getResponse(convertedException);
+    const status = convertedException.getStatus();
+    response.locals.error = instanceToPlain(convertedException.getResponse());
 
     if (process.env.NODE_ENV === 'development') {
-      this.logger.error(exception.stack);
+      this.logger.error(exception);
     }
 
     response.status(status).json(instanceToPlain(responseEntity));

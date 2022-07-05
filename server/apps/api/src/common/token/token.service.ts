@@ -1,3 +1,5 @@
+import { Token } from '@app/entity/domain/token/token.entity';
+import { TokenRepository } from '@app/entity/domain/token/token.repository';
 import { TokenType } from '@app/entity/domain/token/type/TokenType';
 import { User } from '@app/entity/domain/user/user.entity';
 import { Injectable } from '@nestjs/common';
@@ -10,7 +12,11 @@ import { TokenPayload } from './type/TokenPayload';
 
 @Injectable()
 export class TokenService {
-  constructor(private readonly jwtService: JwtService, private readonly jwtConfigService: JwtConfigService) {}
+  constructor(
+    private readonly jwtService: JwtService,
+    private readonly jwtConfigService: JwtConfigService,
+    private readonly tokenRepository: TokenRepository,
+  ) {}
 
   private generateToken(sub: number, exp: Moment, type: TokenType) {
     const payload: TokenPayload = {
@@ -22,12 +28,18 @@ export class TokenService {
     return this.jwtService.sign(payload);
   }
 
-  generateAuthToken(user: User) {
+  async generateAuthToken(user: User) {
     const accessTokenExpires = moment().add(this.jwtConfigService.accessTokenExpireMinutes, 'minutes');
     const accessToken = this.generateToken(user.id, accessTokenExpires, TokenType.ACCESS);
 
     const refreshTokenExpires = moment().add(this.jwtConfigService.refreshTokenExpireDays, 'days');
     const refreshToken = this.generateToken(user.id, refreshTokenExpires, TokenType.REFRESH);
+
+    const token = new Token();
+    token.token = refreshToken;
+    token.tokenType = TokenType.REFRESH;
+    token.userId = user.id;
+    await this.tokenRepository.save(token);
 
     return {
       accessToken,

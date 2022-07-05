@@ -4,9 +4,7 @@ import { MysqlConfig } from './validate';
 
 @Injectable()
 export class MysqlConfigService {
-  constructor(
-    private readonly configService: ConfigService<MysqlConfig, true>,
-  ) {}
+  constructor(private readonly configService: ConfigService<MysqlConfig, true>) {}
 
   get hostName() {
     return this.configService.get('MYSQL_HOSTNAME', { infer: true });
