@@ -6,10 +6,15 @@ import { Connection } from 'typeorm';
 import { AlreadyExistPhoneNumberException } from '../../common/exception/AlreadyExistPhoneNumberException';
 import { InvalidPhoneCodeException } from '../../common/exception/InvalidPhoneCodeException';
 import { UserNotFoundException } from '../../common/exception/UserNotFoundException';
+import { TokenService } from '../../common/token/token.service';
 
 @Injectable()
 export class AuthService {
-  constructor(private readonly userRepository: UserRepository, private readonly connection: Connection) {}
+  constructor(
+    private readonly userRepository: UserRepository,
+    private readonly tokenService: TokenService,
+    private readonly connection: Connection,
+  ) {}
 
   sendPhoneCode(phone: string) {
     // sending
@@ -37,7 +42,8 @@ export class AuthService {
       await em.save(userProfile);
     });
 
-    return user;
+    const tokens = await this.tokenService.generateAuthToken(user);
+    return tokens;
   }
 
   async login(phone: string, code: string) {
@@ -50,7 +56,9 @@ export class AuthService {
       throw new UserNotFoundException();
     }
 
-    return user;
+    const tokens = await this.tokenService.generateAuthToken(user);
+
+    return tokens;
   }
 
   private isValidPhoneCode(phone: string, code: string) {
