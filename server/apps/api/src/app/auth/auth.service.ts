@@ -5,11 +5,17 @@ import { Injectable } from '@nestjs/common';
 import { Connection } from 'typeorm';
 import { AlreadyExistPhoneNumberException } from '../../common/exception/AlreadyExistPhoneNumberException';
 import { InvalidPhoneCodeException } from '../../common/exception/InvalidPhoneCodeException';
+import { InvalidTokenException } from '../../common/exception/InvalidTokenException';
 import { UserNotFoundException } from '../../common/exception/UserNotFoundException';
+import { TokenService } from '../../common/token/token.service';
 
 @Injectable()
 export class AuthService {
-  constructor(private readonly userRepository: UserRepository, private readonly connection: Connection) {}
+  constructor(
+    private readonly userRepository: UserRepository,
+    private readonly tokenService: TokenService,
+    private readonly connection: Connection,
+  ) {}
 
   sendPhoneCode(phone: string) {
     // sending
@@ -17,7 +23,7 @@ export class AuthService {
     return phone;
   }
 
-  async register(phone: string, code: string) {
+  async signup(phone: string, code: string) {
     if (!this.isValidPhoneCode(phone, code)) {
       throw new InvalidPhoneCodeException();
     }
@@ -37,10 +43,11 @@ export class AuthService {
       await em.save(userProfile);
     });
 
-    return user;
+    const tokens = await this.tokenService.generateAuthToken(user);
+    return tokens;
   }
 
-  async login(phone: string, code: string) {
+  async signin(phone: string, code: string) {
     if (!this.isValidPhoneCode(phone, code)) {
       throw new InvalidPhoneCodeException();
     }
@@ -50,7 +57,24 @@ export class AuthService {
       throw new UserNotFoundException();
     }
 
-    return user;
+    const tokens = await this.tokenService.generateAuthToken(user);
+
+    return tokens;
+  }
+
+  async refreshTokens(token: string) {
+    const tokenEntity = await this.tokenService.verifyRefreshToken(token);
+
+    const user = await this.userRepository.findOne(tokenEntity.userId);
+    if (!user) {
+      throw new InvalidTokenException();
+    }
+
+    await this.tokenService.deleteById(tokenEntity.id);
+
+    const tokens = await this.tokenService.generateAuthToken(user);
+
+    return tokens;
   }
 
   private isValidPhoneCode(phone: string, code: string) {

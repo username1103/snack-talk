@@ -4,7 +4,6 @@ import { JwtService } from '@nestjs/jwt';
 import { Test } from '@nestjs/testing';
 import moment from 'moment';
 import { Connection } from 'typeorm';
-import { Token } from '@app/entity/domain/token/token.entity';
 import { DataBaseModule } from '../../config/database/database.module';
 import { InvalidTokenException } from '../exception/InvalidTokenException';
 import { TokenModule } from './token.module';
