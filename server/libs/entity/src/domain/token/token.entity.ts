@@ -18,8 +18,8 @@ export class Token extends BaseEntity {
   @Column()
   token: string;
 
-  @Column({ type: 'tinyint', default: 0 })
-  isExpired: number;
+  @Column({ default: false })
+  isBlackList: boolean;
 
   static of(token: string, type: TokenType, userId: number) {
     const tokenEntity = new Token();

@@ -5,6 +5,7 @@ import { Injectable } from '@nestjs/common';
 import { Connection } from 'typeorm';
 import { AlreadyExistPhoneNumberException } from '../../common/exception/AlreadyExistPhoneNumberException';
 import { InvalidPhoneCodeException } from '../../common/exception/InvalidPhoneCodeException';
+import { InvalidTokenException } from '../../common/exception/InvalidTokenException';
 import { UserNotFoundException } from '../../common/exception/UserNotFoundException';
 import { TokenService } from '../../common/token/token.service';
 
@@ -22,7 +23,7 @@ export class AuthService {
     return phone;
   }
 
-  async register(phone: string, code: string) {
+  async signup(phone: string, code: string) {
     if (!this.isValidPhoneCode(phone, code)) {
       throw new InvalidPhoneCodeException();
     }
@@ -46,7 +47,7 @@ export class AuthService {
     return tokens;
   }
 
-  async login(phone: string, code: string) {
+  async signin(phone: string, code: string) {
     if (!this.isValidPhoneCode(phone, code)) {
       throw new InvalidPhoneCodeException();
     }
@@ -55,6 +56,21 @@ export class AuthService {
     if (!user) {
       throw new UserNotFoundException();
     }
+
+    const tokens = await this.tokenService.generateAuthToken(user);
+
+    return tokens;
+  }
+
+  async refreshTokens(token: string) {
+    const tokenEntity = await this.tokenService.verifyRefreshToken(token);
+
+    const user = await this.userRepository.findOne(tokenEntity.userId);
+    if (!user) {
+      throw new InvalidTokenException();
+    }
+
+    await this.tokenService.deleteById(tokenEntity.id);
 
     const tokens = await this.tokenService.generateAuthToken(user);
 

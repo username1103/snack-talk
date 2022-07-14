@@ -45,7 +45,25 @@ export class TokenService {
     };
   }
 
-  verifyToken(token: string, tokenType: TokenType) {
+  async verifyRefreshToken(token: string) {
+    const payload = this.verifyToken(token, TokenType.REFRESH);
+
+    const tokenEntity = await this.tokenRepository.findOne({
+      where: { token: token, userId: payload.sub, type: TokenType.REFRESH },
+    });
+
+    if (!tokenEntity) {
+      throw new InvalidTokenException();
+    }
+
+    return tokenEntity;
+  }
+
+  async deleteById(tokenId: number) {
+    await this.tokenRepository.delete({ id: tokenId });
+  }
+
+  private verifyToken(token: string, tokenType: TokenType) {
     try {
       const payload = this.jwtService.verify(token);
       const convertedPaylaod = plainToInstance(TokenPayload, payload);
@@ -54,7 +72,7 @@ export class TokenService {
         throw new Error('Invalid Token Type');
       }
 
-      return payload;
+      return convertedPaylaod;
     } catch (e) {
       throw new InvalidTokenException();
     }

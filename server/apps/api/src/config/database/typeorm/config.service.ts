@@ -27,6 +27,7 @@ export class TypeOrmConfigService implements TypeOrmOptionsFactory {
       synchronize: !this.appConfigService.isProduction(),
       namingStrategy: new SnakeNamingStrategy(),
       dropSchema: this.appConfigService.isTest(),
+      // timezone: '+00:00',
     };
   }
 }

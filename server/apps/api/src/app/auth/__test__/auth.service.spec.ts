@@ -23,14 +23,14 @@ describe('AuthService', () => {
     await connection.close();
   });
 
-  describe('register', () => {
+  describe('signup', () => {
     test('해당하는 번호의 생성된 유저를 리턴하는가', async () => {
       // given
       const phone = '01050568216';
       const code = '77777';
 
       // when
-      const result = service.register(phone, code);
+      const result = service.signup(phone, code);
       // then
       await expect(result).resolves.toMatchObject({
         userId: expect.any(Number),
