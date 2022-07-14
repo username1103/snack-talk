@@ -35,10 +35,7 @@ export class TokenService {
     const refreshTokenExpires = moment().add(this.jwtConfigService.refreshTokenExpireDays, 'days');
     const refreshToken = this.generateToken(user.id, refreshTokenExpires, TokenType.REFRESH);
 
-    const token = new Token();
-    token.token = refreshToken;
-    token.tokenType = TokenType.REFRESH;
-    token.userId = user.id;
+    const token = Token.of(refreshToken, TokenType.REFRESH, user.id);
     await this.tokenRepository.save(token);
 
     return {

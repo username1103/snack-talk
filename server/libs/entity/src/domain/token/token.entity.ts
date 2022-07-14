@@ -13,11 +13,19 @@ export class Token extends BaseEntity {
     length: 20,
     transformer: new TokenTypeTransformer(),
   })
-  tokenType: TokenType;
+  type: TokenType;
 
   @Column()
   token: string;
 
   @Column({ type: 'tinyint', default: 0 })
   isExpired: number;
+
+  static of(token: string, type: TokenType, userId: number) {
+    const tokenEntity = new Token();
+    tokenEntity.token = token;
+    tokenEntity.type = type;
+    tokenEntity.userId = userId;
+    return tokenEntity;
+  }
 }
