@@ -3,6 +3,7 @@ import { User } from '@app/entity/domain/user/user.entity';
 import { UserRepository } from '@app/entity/domain/user/user.repository';
 import { Injectable } from '@nestjs/common';
 import { Connection } from 'typeorm';
+import { TokenRepository } from '../../../../../libs/entity/src/domain/token/token.repository';
 import { AlreadyExistPhoneNumberException } from '../../common/exception/AlreadyExistPhoneNumberException';
 import { InvalidPhoneCodeException } from '../../common/exception/InvalidPhoneCodeException';
 import { InvalidTokenException } from '../../common/exception/InvalidTokenException';
@@ -13,6 +14,7 @@ import { TokenService } from '../../common/token/token.service';
 export class AuthService {
   constructor(
     private readonly userRepository: UserRepository,
+    private readonly tokenRepository: TokenRepository,
     private readonly tokenService: TokenService,
     private readonly connection: Connection,
   ) {}
@@ -62,6 +64,12 @@ export class AuthService {
     return tokens;
   }
 
+  async signout(token: string) {
+    const tokenEntity = await this.tokenService.decodeRefreshToken(token);
+
+    await this.tokenRepository.deleteById(tokenEntity.id);
+  }
+
   async refreshTokens(token: string) {
     const tokenEntity = await this.tokenService.verifyRefreshToken(token);
 
@@ -70,7 +78,7 @@ export class AuthService {
       throw new InvalidTokenException();
     }
 
-    await this.tokenService.deleteById(tokenEntity.id);
+    await this.tokenRepository.deleteById(tokenEntity.id);
 
     const tokens = await this.tokenService.generateAuthToken(user);
 

@@ -1,4 +1,5 @@
 import { UserModule } from '@app/entity/domain/user/user.module';
+import { TokenModule as TokenEntityModule } from '@app/entity/domain/token/token.module';
 import { Test, TestingModule } from '@nestjs/testing';
 import { Connection } from 'typeorm';
 import { TokenModule } from '../../../common/token/token.module';
@@ -11,7 +12,7 @@ describe('AuthService', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      imports: [UserModule, DataBaseModule, TokenModule],
+      imports: [UserModule, DataBaseModule, TokenModule, TokenEntityModule],
       providers: [AuthService],
     }).compile();
 

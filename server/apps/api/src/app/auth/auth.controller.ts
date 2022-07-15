@@ -11,6 +11,7 @@ import { AuthService } from './auth.service';
 import { RefreshAuthTokenRequestDto } from './dto/refresh-auth-token-request.dto';
 import { RegisterRequest } from './dto/register-request.dto';
 import { SendPhoneCodeDto } from './dto/send-phone-code.dto';
+import { SignoutRequestDto } from './dto/signout-request.dto';
 import { TokenResponse } from './dto/token-response.dto';
 
 @Controller('/auth')
@@ -40,6 +41,13 @@ export class AuthController {
     const tokens = await this.authService.signin(body.phone, body.code);
 
     return ResponseEntity.OK_WITH_DATA(new TokenResponse(tokens));
+  }
+
+  @Post('/signout')
+  @ApiSuccessResponse(HttpStatus.NO_CONTENT)
+  @ApiErrorResponse(InvalidTokenException)
+  async signout(@Body() body: SignoutRequestDto) {
+    await this.authService.signout(body.refreshToken);
   }
 
   @Post('/refresh-tokens')
