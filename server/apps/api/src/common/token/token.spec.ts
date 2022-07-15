@@ -68,7 +68,7 @@ describe('Token Module Test', () => {
       });
 
       // when
-      const payload = tokenService.verifyToken(token, TokenType.ACCESS);
+      const payload = tokenService['verifyToken'](token, TokenType.ACCESS);
 
       // then
       expect(payload).toHaveProperty('sub', 123);
@@ -88,7 +88,7 @@ describe('Token Module Test', () => {
 
       // when, then
       await expect(async () => {
-        tokenService.verifyToken(token, TokenType.REFRESH);
+        tokenService['verifyToken'](token, TokenType.REFRESH);
       }).rejects.toThrow(new InvalidTokenException());
     });
   });

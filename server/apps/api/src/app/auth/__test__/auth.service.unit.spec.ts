@@ -3,12 +3,14 @@ import { mock, instance } from 'ts-mockito';
 import { UserRepository } from '../../../../../../libs/entity/src/domain/user/user.repository';
 import { TokenService } from '../../../common/token/token.service';
 import { AuthService } from '../auth.service';
+import { TokenRepository } from '../../../../../../libs/entity/src/domain/token/token.repository';
 
 describe('Auth Service Unit Test', () => {
   let authService: AuthService;
   let tokenService: TokenService;
   let connection: Connection;
   let userRepository: UserRepository;
+  let tokenRepository: TokenRepository;
 
   describe('sendPhoneCode', () => {
     test('정의되어 있는가', async () => {
@@ -16,8 +18,14 @@ describe('Auth Service Unit Test', () => {
       tokenService = mock(TokenService);
       connection = mock(Connection);
       userRepository = mock(UserRepository);
+      tokenRepository = mock(TokenRepository);
 
-      authService = new AuthService(instance(userRepository), instance(tokenService), instance(connection));
+      authService = new AuthService(
+        instance(userRepository),
+        instance(tokenRepository),
+        instance(tokenService),
+        instance(connection),
+      );
 
       // when
       // then
@@ -34,8 +42,14 @@ describe('Auth Service Unit Test', () => {
       tokenService = mock(TokenService);
       connection = mock(Connection);
       userRepository = mock(UserRepository);
+      tokenRepository = mock(TokenRepository);
 
-      authService = new AuthService(instance(userRepository), instance(tokenService), instance(connection));
+      authService = new AuthService(
+        instance(userRepository),
+        instance(tokenRepository),
+        instance(tokenService),
+        instance(connection),
+      );
 
       // when
       const isVerified = authService['isValidPhoneCode'](phone, code);
@@ -51,8 +65,14 @@ describe('Auth Service Unit Test', () => {
       tokenService = mock(TokenService);
       connection = mock(Connection);
       userRepository = mock(UserRepository);
+      tokenRepository = mock(TokenRepository);
 
-      authService = new AuthService(instance(userRepository), instance(tokenService), instance(connection));
+      authService = new AuthService(
+        instance(userRepository),
+        instance(tokenRepository),
+        instance(tokenService),
+        instance(connection),
+      );
       // when
       const isVerified = authService['isValidPhoneCode'](phone, code);
       // then
