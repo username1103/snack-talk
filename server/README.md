@@ -2,8 +2,7 @@
 
 nestjs를 활용한 채팅 토이 프로젝트 입니다.
 
-
-## 프로젝트 목표
+# 프로젝트 목표
 
 1. nest를 활용한 다양한 경험
 2. 소켓을 통한 채팅서버(우선은 1개의 서버라고 가정)
@@ -16,26 +15,25 @@ nestjs를 활용한 채팅 토이 프로젝트 입니다.
 2. 성능 테스트
 3. 테스트 커버리지 향상
 
-## Application
+# Application
 
-### api
+## api
 
 Rest API 서버
 
-### chat
+## chat
 
 Socket Chat 서버
 
+# Library
 
-## Library
-
-### entity
+## entity
 
 도메인 엔티티 모델 정의 및 설정
 
 - 필요한 경우에만 연관관계를 설정하는것이 목표
 
-### common-config
+## common-config
 
 공통적으로 필요한 부분들
 
@@ -43,3 +41,30 @@ Socket Chat 서버
 - ExceptionFilter
 - Logger
 
+# 환경변수
+
+.env.development
+
+```
+PORT=3000
+
+MYSQL_HOSTNAME=localhost
+MYSQL_USERNAME=root
+MYSQL_PASSWORD=admin
+MYSQL_PORT=3306
+MYSQL_DATABASE=development
+
+JWT_SECRET=randomsecret
+JWT_ACCESS_EXPIRATION_MINUTES=30
+JWT_REFRESH_EXPIRATION_DAYS=7
+
+SWAGGER_ID=test
+SWAGGER_PASSWORD=test
+```
+
+# 개발용 API 서버 실행
+
+```
+npm run db:up --env=dev
+npm run start:dev api
+```
