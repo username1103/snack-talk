@@ -1,7 +1,17 @@
+import { StackNavigationProp } from "@react-navigation/stack";
 import { Image, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { color } from "../../styles/color";
 
-const LoginScreen = () => {
+type LoginScreenNavigationProp = StackNavigationProp<
+  { Login: undefined; SetProfile: undefined },
+  "Login"
+>;
+
+type Props = {
+  navigation: LoginScreenNavigationProp;
+};
+
+const LoginScreen = ({ navigation }: Props) => {
   return (
     <View
       style={{
@@ -119,6 +129,7 @@ const LoginScreen = () => {
             }}
           >
             <TouchableOpacity
+              onPress={() => navigation.push("SetProfile")}
               style={{
                 flex: 1,
                 backgroundColor: color.secondary,
