@@ -2,6 +2,7 @@ import { BadParameterException } from '@app/common-config/exception/BadParameter
 import { ResponseEntity } from '@app/common-config/response/ResponseEntity';
 import { Body, Controller, HttpStatus, Post } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
+import { AlreadyExistPhoneNumberException } from '../../common/exception/AlreadyExistPhoneNumberException';
 import { ApiErrorResponse } from '../../common/decorator/api-error-response.decorator';
 import { ApiSuccessResponse } from '../../common/decorator/api-success-response.decorator';
 import { InvalidPhoneCodeException } from '../../common/exception/InvalidPhoneCodeException';
@@ -27,7 +28,7 @@ export class AuthController {
 
   @Post('/signup')
   @ApiSuccessResponse(HttpStatus.CREATED, TokenResponse)
-  @ApiErrorResponse(InvalidPhoneCodeException)
+  @ApiErrorResponse(InvalidPhoneCodeException, AlreadyExistPhoneNumberException)
   async signup(@Body() body: RegisterRequest) {
     const tokens = await this.authService.signup(body.phone, body.code);
 
